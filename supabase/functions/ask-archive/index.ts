@@ -9,20 +9,25 @@
 //   supabase secrets set ANTHROPIC_API_KEY=sk-ant-... --project-ref jnouvwxomrcffqwilqkq
 // Then set ASK_ENDPOINT in site/archive.js to the function URL and redeploy the site.
 
-// Per-IP rate limit: sliding window, in-memory (per isolate — approximate but
-// enough to stop casual abuse; the hard backstop is the Anthropic console
-// spend limit).
-const WINDOW_MS = 60_000;
-const MAX_PER_WINDOW = 10;
-const hits = new Map<string, number[]>();
-
-function rateLimited(ip: string): boolean {
-  const now = Date.now();
-  const recent = (hits.get(ip) || []).filter((t) => now - t < WINDOW_MS);
-  recent.push(now);
-  hits.set(ip, recent);
-  if (hits.size > 10_000) hits.clear();
-  return recent.length > MAX_PER_WINDOW;
+// Durable rate limit via the ask_rate table (10/min per IP + 500/day global),
+// checked atomically by the ask_rate_check() Postgres function. Fails open on
+// DB errors so a hiccup doesn't take down the ask box.
+async function rateLimited(ip: string): Promise<boolean> {
+  try {
+    const resp = await fetch(`${Deno.env.get('SUPABASE_URL')}/rest/v1/rpc/ask_rate_check`, {
+      method: 'POST',
+      headers: {
+        apikey: Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!,
+        authorization: `Bearer ${Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')}`,
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({ p_ip: ip }),
+    });
+    if (!resp.ok) return false;
+    return (await resp.json()) === false;
+  } catch {
+    return false;
+  }
 }
 
 const CORS = {
@@ -36,7 +41,7 @@ Deno.serve(async (req) => {
   if (req.method !== 'POST') return json({ error: 'POST only' }, 405);
 
   const ip = req.headers.get('x-forwarded-for')?.split(',')[0].trim() || 'unknown';
-  if (rateLimited(ip)) return json({ error: 'rate limited — try again in a minute' }, 429);
+  if (await rateLimited(ip)) return json({ error: 'rate limited — try again in a minute' }, 429);
 
   let body: { question?: string; context?: string };
   try { body = await req.json(); } catch { return json({ error: 'bad json' }, 400); }
