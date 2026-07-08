@@ -12,6 +12,8 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
+// Cache-buster: browsers cache style.css/js across deploys and miss layout changes.
+const V = Date.now().toString(36);
 const DIST = join(ROOT, 'dist');
 
 const editionsIdx = JSON.parse(readFileSync(join(ROOT, 'data', 'editions.json'), 'utf8'));
@@ -78,7 +80,7 @@ function page({ rel, title, desc, body, index = false, extraHead = '' }) {
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(desc)}">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📰</text></svg>">
-<link rel="stylesheet" href="${rel}style.css">
+<link rel="stylesheet" href="${rel}style.css?v=${V}">
 ${extraHead}
 </head>
 <body>
@@ -102,7 +104,7 @@ ${body}
   <a href="https://stephenvdavis-jpg.github.io/t-shirts/index.html" target="_blank" rel="noopener">👕 Btown Merch</a></p>
   <p class="fine">Every edition since February 2025, archived and searchable.</p>
 </footer>
-<script type="module" src="${rel}archive.js"></script>
+<script type="module" src="${rel}archive.js?v=${V}"></script>
 </body>
 </html>`;
 }
@@ -350,7 +352,7 @@ mkdirSync(join(DIST, 'premium'), { recursive: true });
 writeFileSync(join(DIST, 'premium', 'index.html'), page({
   rel: '../', title: 'The Full Archive · Btown Brief',
   desc: 'Every headline and every story summary the Btown Brief has ever published, for supporters.',
-  extraHead: '<script type="module" src="../premium.js"></script>',
+  extraHead: `<script type="module" src="../premium.js?v=${V}"></script>`,
   body: `
 <section class="hero">
   <h1>The <em>Full</em> Archive</h1>
