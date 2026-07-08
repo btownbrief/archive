@@ -147,8 +147,9 @@ for (const e of ordered) {
   (months[k] ||= []).push(e);
 }
 const monthName = (k) => new Date(k + '-15T12:00:00Z').toLocaleDateString('en-US', { month: 'long', year: 'numeric', timeZone: 'UTC' });
-const browse = Object.keys(months).sort().reverse().map((k) => `
-  <details class="month"${k === Object.keys(months).sort().reverse()[0] ? ' open' : ''}>
+const monthKeys = Object.keys(months).sort().reverse();
+const browse = monthKeys.map((k, i) => `
+  <details class="month"${i < 2 ? ' open' : ''}>
     <summary>${monthName(k)} <span class="count">${months[k].length}</span></summary>
     <ul>${months[k].map((e) => `<li><a href="e/${e.slug}/index.html">${esc(e.title)}</a> <span class="dt">${shortDate(e.date)}</span></li>`).join('')}</ul>
   </details>`).join('\n');
