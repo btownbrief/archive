@@ -30,6 +30,13 @@ jobs:
           node scripts/extract.mjs
           node scripts/build-site.mjs
           npx -y pagefind --site dist
+      - name: Refresh premium archive data in Supabase storage
+        run: |
+          curl -sf -X POST "https://jnouvwxomrcffqwilqkq.supabase.co/storage/v1/object/archive-premium/premium.json" \
+            -H "Authorization: Bearer $SERVICE_KEY" -H "x-upsert: true" \
+            -H "content-type: application/json" --data-binary @data/premium.json
+        env:
+          SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

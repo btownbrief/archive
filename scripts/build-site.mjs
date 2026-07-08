@@ -88,6 +88,7 @@ ${extraHead}
     <a href="${rel}index.html">Search</a>
     <a href="${rel}topics/index.html">Topics</a>
     <a href="${rel}stats/index.html">Stats</a>
+    <a href="${rel}premium/index.html">🔓 Full Archive</a>
     <a href="#" id="btn-random" data-rel="${rel}">🎲 Random</a>
     <a href="https://www.btownbrief.com" target="_blank" rel="noopener">btownbrief.com ↗</a>
   </nav>
@@ -158,6 +159,32 @@ const topicChips = Object.entries(TOPIC_LABELS)
   .map(([t, l]) => `<a class="chip" href="topics/${t}/index.html">${l}</a>`).join('\n') +
   `\n<a class="chip chip-special" href="topics/openings-closings/index.html">🚪 Openings &amp; Closings</a>`;
 
+// Trivia time capsule cards (used on home + stats; archive.js deals 3 at random).
+const triviaCards = (rel) => trivia.map((t) => `<div class="trivia" hidden>
+<p class="tq">${esc(t.question)} <span class="dt">${shortDate(t.date)}</span></p>
+${t.options?.length ? `<ul>${t.options.map((o, i) => `<li>${'ABCD'[i]}) ${esc(o)}</li>`).join('')}</ul>` : ''}
+<button class="reveal-btn" type="button">Reveal answer</button>
+<p class="tanswer" hidden><strong>Answer:</strong> ${esc(t.answer || 'Lost to history — check the edition!')} · <a href="${rel}e/${t.edition}/index.html">edition</a></p>
+</div>`).join('\n');
+
+// Latest-editions teaser: 8 one-line headlines per edition, rest locked behind
+// the premium Full Archive page.
+const storiesByEdition = new Map();
+for (const s of stories) {
+  if (!storiesByEdition.has(s.edition)) storiesByEdition.set(s.edition, []);
+  storiesByEdition.get(s.edition).push(s);
+}
+const teaserCols = [...ordered].reverse().slice(0, 2).map((e) => {
+  const list = storiesByEdition.get(e.slug) || [];
+  const extra = Math.max(list.length - 8, 0);
+  return `<div class="teaser-ed">
+    <h3><a href="e/${e.slug}/index.html">${esc(e.title)}</a></h3>
+    <p class="dt">${fmtDate(e.date)}</p>
+    <ul class="tease-list">${list.slice(0, 8).map((s) => `<li>${esc(s.headline)}</li>`).join('')}</ul>
+    <p class="tease-more">🔒 …plus ${extra ? `${extra} more headline${extra === 1 ? '' : 's'} and` : ''} the full story summaries</p>
+  </div>`;
+}).join('\n');
+
 const home = page({
   rel: '', index: true,
   title: 'Btown Brief Archive — every edition, searchable',
@@ -183,25 +210,43 @@ const home = page({
   <div id="ask-results" aria-live="polite"></div>
 </section>
 
+<section class="panel">
+  <h2>🏷️ Browse by topic</h2>
+  <div class="chips">${topicChips}</div>
+</section>
+
+<section class="panel premium-teaser">
+  <div class="panel-head">
+    <h2>🗞️ Inside the latest editions</h2>
+    <a class="unlock-btn" href="premium/index.html">🔓 Unlock</a>
+  </div>
+  <p class="hint">A taste of the full archive — every headline and summary from all ${stats.editions} editions lives behind the unlock.</p>
+  <div class="teaser-cols">
+${teaserCols}
+  </div>
+  <p class="teaser-cta"><a class="chip chip-special" href="premium/index.html">🔓 Unlock the Full Archive — every headline &amp; summary since Feb 2025 →</a></p>
+</section>
+
 <section class="panel otd-panel" id="otd" hidden>
   <h2>🗓️ This week, last year</h2>
   <div id="otd-body"></div>
 </section>
 
 <section class="panel">
-  <h2>🏷️ Browse by topic</h2>
-  <div class="chips">${topicChips}</div>
+  <h2>🧠 Trivia time capsule</h2>
+  <p class="hint">From the early editions, when trivia lived in the newsletter itself. A fresh few every visit — <button class="reveal-btn" id="trivia-shuffle" type="button">shuffle 🔀</button></p>
+  <div id="trivia-deck">${triviaCards('')}</div>
 </section>
 
 <section class="panel stats-teaser">
   <h2>📊 The Brief, by the numbers</h2>
-  <div class="statgrid">
-    <div class="stat"><b>${stats.totalWords.toLocaleString()}</b><span>words written<br>(War and Peace ×${(stats.totalWords / 587287).toFixed(1)})</span></div>
-    <div class="stat"><b>${stats.stories.toLocaleString()}</b><span>local stories covered</span></div>
-    <div class="stat"><b>${stats.openings}</b><span>openings celebrated</span></div>
-    <div class="stat"><b>${stats.closings}</b><span>goodbyes said</span></div>
+  <div class="statgrid statgrid-sm">
+    <div class="stat"><b>${stats.totalWords.toLocaleString()}</b><span>words written</span></div>
+    <div class="stat"><b>${stats.stories.toLocaleString()}</b><span>stories covered</span></div>
+    <div class="stat"><b>${stats.openings}</b><span>openings</span></div>
+    <div class="stat"><b>${stats.closings}</b><span>goodbyes</span></div>
   </div>
-  <p class="teaser-cta"><a class="chip chip-special" href="stats/index.html">See all the stats — places, topics, trivia time capsule →</a></p>
+  <p class="teaser-cta"><a class="chip chip-special" href="stats/index.html">See all the stats — places, topics &amp; more →</a></p>
 </section>
 
 <section class="panel">
@@ -259,12 +304,6 @@ const placeRows = stats.topPlaces.map(([p, n]) => `<tr><td>${esc(p)}</td><td>${n
 const topicRows = Object.entries(stats.topicCounts).sort((a, b) => b[1] - a[1])
   .map(([t, n]) => `<tr><td><a href="../topics/${t}/index.html">${TOPIC_LABELS[t]}</a></td><td>${n}</td></tr>`).join('');
 const warAndPeace = (stats.totalWords / 587287).toFixed(1);
-const triviaCards = trivia.map((t) => `<div class="trivia" hidden>
-<p class="tq">${esc(t.question)} <span class="dt">${shortDate(t.date)}</span></p>
-${t.options?.length ? `<ul>${t.options.map((o, i) => `<li>${'ABCD'[i]}) ${esc(o)}</li>`).join('')}</ul>` : ''}
-<button class="reveal-btn" type="button">Reveal answer</button>
-<p class="tanswer" hidden><strong>Answer:</strong> ${esc(t.answer || 'Lost to history — check the edition!')} · <a href="../e/${t.edition}/index.html">edition</a></p>
-</div>`).join('\n');
 
 mkdirSync(join(DIST, 'stats'), { recursive: true });
 writeFileSync(join(DIST, 'stats', 'index.html'), page({
@@ -285,7 +324,72 @@ writeFileSync(join(DIST, 'stats', 'index.html'), page({
 </div>
 <section><h2>Month by month</h2><table>${monthRows}</table></section>
 <section><h2>🧠 Trivia time capsule</h2><p class="hint">From the early editions, when trivia lived in the newsletter itself. A fresh few every visit — <button class="reveal-btn" id="trivia-shuffle" type="button">shuffle 🔀</button></p>
-<div id="trivia-deck">${triviaCards}</div></section>`,
+<div id="trivia-deck">${triviaCards('../')}</div></section>`,
+}));
+
+// ---------- premium (Full Archive) page + gated dataset ----------
+// The page ships only the locked pitch; the goldmine itself (data/premium.json)
+// stays OUT of dist and is served via the archive-unlock edge function to
+// verified paid subscribers ($10+/mo on beehiiv).
+const premiumData = {
+  generated: new Date().toISOString().slice(0, 10),
+  editions: [...ordered].reverse().map((e) => ({
+    slug: e.slug, title: e.title, date: e.date, url: e.url,
+    stories: (storiesByEdition.get(e.slug) || []).map((s) => ({
+      h: s.headline, u: s.url, q: s.quote || '', c: s.commentary || '', oc: s.openClose,
+    })),
+  })),
+};
+writeFileSync(join(ROOT, 'data', 'premium.json'), JSON.stringify(premiumData));
+
+mkdirSync(join(DIST, 'premium'), { recursive: true });
+writeFileSync(join(DIST, 'premium', 'index.html'), page({
+  rel: '../', title: 'The Full Archive — Btown Brief',
+  desc: 'Every headline and every story summary the Btown Brief has ever published — for supporters.',
+  extraHead: '<script type="module" src="../premium.js"></script>',
+  body: `
+<section class="hero">
+  <h1>The <em>Full</em> Archive</h1>
+  <p class="tagline">Every headline. Every summary. All ${stats.editions} editions, ${stats.stories.toLocaleString()} stories — organized, browsable, and yours as a Btown Brief supporter.</p>
+</section>
+
+<div id="pm-locked">
+  <section class="panel pm-pitch">
+    <div class="panel-head">
+      <h2>🔒 What's inside</h2>
+    </div>
+    <ul class="pm-perks">
+      <li>📰 <strong>${stats.stories.toLocaleString()} local stories</strong> — every headline with its full Btown Brief summary, month by month since February 2025</li>
+      <li>🔎 Filter the whole goldmine by any word — places, businesses, people</li>
+      <li>💛 Support local news, events, and community highlights</li>
+      <li>👕 Bonus: an exclusive Btown Brief t-shirt after your first 6 months of support, and another one every 12 months after that!</li>
+    </ul>
+    <div class="pm-ctas">
+      <a class="pm-btn pm-btn-primary" href="https://www.btownbrief.com/upgrade" target="_blank" rel="noopener">Become a supporter — $10/month →</a>
+      <a class="pm-btn" href="https://ko-fi.com/btownbrief" target="_blank" rel="noopener">☕ Or support on Ko-fi</a>
+    </div>
+    <p class="fine">Subscribe with the same email you use for the newsletter — that's your key.</p>
+  </section>
+
+  <section class="panel pm-gate">
+    <h2>Already a supporter?</h2>
+    <p class="hint">Enter the email you subscribed with — we'll check it against the supporter list and let you in.</p>
+    <form id="pm-form"><input id="pm-email" type="email" placeholder="you@example.com" autocomplete="email" required>
+    <button type="submit">Unlock 🔓</button></form>
+    <div id="pm-msg" aria-live="polite"></div>
+  </section>
+</div>
+
+<div id="pm-open" hidden>
+  <section class="panel pm-toolbar">
+    <div class="panel-head">
+      <h2>✅ Unlocked — welcome back!</h2>
+      <button class="reveal-btn" id="pm-signout" type="button">sign out</button>
+    </div>
+    <input id="pm-filter" type="search" placeholder="Filter every story… try “creemee”, “Church Street”, “Winooski”" autocomplete="off">
+  </section>
+  <div id="pm-body"><p class="searching">Loading the goldmine…</p></div>
+</div>`,
 }));
 
 // ---------- client data + assets ----------
@@ -297,5 +401,6 @@ writeFileSync(join(DIST, 'data', 'editions.json'), JSON.stringify(editionsIdx.ma
 writeFileSync(join(DIST, 'data', 'stories-lite.json'), JSON.stringify(storiesLite));
 cpSync(join(ROOT, 'site', 'style.css'), join(DIST, 'style.css'));
 cpSync(join(ROOT, 'site', 'archive.js'), join(DIST, 'archive.js'));
+cpSync(join(ROOT, 'site', 'premium.js'), join(DIST, 'premium.js'));
 
 console.log(`Built ${ordered.length} edition pages, ${Object.keys(TOPIC_LABELS).length + 1} topic pages, stats, home → dist/`);
