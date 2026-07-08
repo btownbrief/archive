@@ -61,7 +61,7 @@ Deno.serve(async (req) => {
       max_tokens: 400,
       system:
         'You answer questions about Burlington, Vermont using ONLY the provided Btown Brief newsletter passages. ' +
-        'Answer in 2-4 friendly sentences. Always name the edition date(s) you drew from. ' +
+        'Answer in 2-4 friendly sentences. Never use em dashes. Always name the edition date(s) you drew from. ' +
         "If the passages don't answer the question, say so plainly and suggest what to search instead. Never invent facts.",
       messages: [{ role: 'user', content: `Passages from the archive:\n\n${context}\n\nQuestion: ${question}` }],
     }),

@@ -151,7 +151,7 @@ if (askForm) {
       const search = await pf.search(q);
       const results = await Promise.all(search.results.slice(0, 5).map((r) => r.data()));
       if (!results.length) {
-        out.innerHTML = `<div class="ask-answer">The Brief doesn't seem to have covered that — nothing in ${document.title.match(/\d+/)?.[0] || 'the'} editions matches. Try the search box with different words?</div>`;
+        out.innerHTML = `<div class="ask-answer">The Brief doesn't seem to have covered that. Nothing in ${document.title.match(/\d+/)?.[0] || 'the'} editions matches. Try the search box with different words?</div>`;
         return;
       }
       if (ASK_ENDPOINT) {
@@ -166,10 +166,10 @@ if (askForm) {
         } catch { /* fall back to passages */ }
         out.innerHTML = (answer
           ? `<div class="ask-answer">${esc(answer).replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>')}</div>`
-          : `<div class="ask-answer">Couldn't reach the answer service — here are the closest passages instead:</div>`)
+          : `<div class="ask-answer">Couldn't reach the answer service, so here are the closest passages instead:</div>`)
           + passages(results, stories, q);
       } else {
-        out.innerHTML = `<div class="ask-answer">Here's the closest thing the Brief has published — ${results.length} passage${results.length > 1 ? 's' : ''}, newest context first:</div>` + passages(results, stories, q);
+        out.innerHTML = `<div class="ask-answer">Here's the closest thing the Brief has published: ${results.length} passage${results.length > 1 ? 's' : ''}, newest context first:</div>` + passages(results, stories, q);
       }
     } catch (e) {
       out.innerHTML = `<div class="ask-answer">Something hiccuped (${esc(e.message)}). Try again?</div>`;
@@ -185,7 +185,7 @@ if (askForm) {
       const story = matchStory(stories, slug, q, r.excerpt);
       return `<div class="passage">
         <p class="excerpt">${r.excerpt}</p>
-        <p class="src">— <a href="${rel(`e/${slug}/index.html`)}${frag}">${esc(r.meta.title || slug)}</a>${story ? ` · <a href="${esc(story.u)}" target="_blank" rel="noopener">original article ↗</a>` : ''}</p>
+        <p class="src">from <a href="${rel(`e/${slug}/index.html`)}${frag}">${esc(r.meta.title || slug)}</a>${story ? ` · <a href="${esc(story.u)}" target="_blank" rel="noopener">original article ↗</a>` : ''}</p>
       </div>`;
     }).join('');
   }

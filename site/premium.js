@@ -45,16 +45,16 @@ async function init() {
         msg('');
         await unlock(data.token);
       } else if (data.error === 'not_subscribed') {
-        msg(`That email isn't on the newsletter list yet. <a href="https://www.btownbrief.com" target="_blank" rel="noopener">Subscribe free first</a>, then <a href="https://www.btownbrief.com/upgrade" target="_blank" rel="noopener">upgrade to $10/month</a> — and come right back!`);
+        msg(`That email isn't on the newsletter list yet. <a href="https://www.btownbrief.com" target="_blank" rel="noopener">Subscribe free first</a>, then <a href="https://www.btownbrief.com/upgrade" target="_blank" rel="noopener">upgrade to $10/month</a>, and come right back!`);
       } else if (data.error === 'not_premium') {
-        msg(`You're on the free list — thank you for reading! 💛 The Full Archive is a perk for $10/month supporters. <a href="https://www.btownbrief.com/upgrade" target="_blank" rel="noopener">Upgrade here</a> (t-shirt included after 6 months), then unlock with this same email.`);
+        msg(`You're on the free list, and thank you for reading! 💛 The Full Archive is a perk for $10/month supporters. <a href="https://www.btownbrief.com/upgrade" target="_blank" rel="noopener">Upgrade here</a> (t-shirt included after 6 months), then unlock with this same email.`);
       } else if (resp.status === 429) {
-        msg('Whoa, too many tries — give it a minute and try again.');
+        msg('Whoa, too many tries. Give it a minute and try again.');
       } else {
         msg('Hmm, the unlock service hiccuped. Try again in a moment?');
       }
     } catch {
-      msg('Couldn’t reach the unlock service — check your connection and try again.');
+      msg('Couldn’t reach the unlock service. Check your connection and try again.');
     } finally {
       btn.disabled = false;
     }
@@ -88,7 +88,7 @@ async function unlock(token) {
     render(data);
     return true;
   } catch {
-    $('pm-body').innerHTML = '<p class="empty">Couldn’t load the archive just now — refresh to try again.</p>';
+    $('pm-body').innerHTML = '<p class="empty">Couldn’t load the archive just now. Refresh to try again.</p>';
     return true; // token was accepted; only the data fetch failed
   }
 }

@@ -121,7 +121,7 @@ for (let i = 0; i < ordered.length; i++) {
   const prev = ordered[i - 1], next = ordered[i + 1];
   const html = page({
     rel: '../../', index: false,
-    title: `${e.title} — Btown Brief Archive`,
+    title: `${e.title} · Btown Brief Archive`,
     desc: e.description || `Btown Brief edition from ${fmtDate(e.date)}`,
     body: `
 <article class="edition" data-pagefind-body>
@@ -165,7 +165,7 @@ const triviaCards = (rel) => trivia.map((t) => `<div class="trivia" hidden>
 <p class="tq">${esc(t.question)} <span class="dt">${shortDate(t.date)}</span></p>
 ${t.options?.length ? `<ul>${t.options.map((o, i) => `<li>${'ABCD'[i]}) ${esc(o)}</li>`).join('')}</ul>` : ''}
 <button class="reveal-btn" type="button">Reveal answer</button>
-<p class="tanswer" hidden><strong>Answer:</strong> ${esc(t.answer || 'Lost to history — check the edition!')} · <a href="${rel}e/${t.edition}/index.html">edition</a></p>
+<p class="tanswer" hidden><strong>Answer:</strong> ${esc(t.answer || 'Lost to history. Check the edition!')} · <a href="${rel}e/${t.edition}/index.html">edition</a></p>
 </div>`).join('\n');
 
 // Latest-editions teaser: 8 one-line headlines per edition, rest locked behind
@@ -188,24 +188,24 @@ const teaserCols = [...ordered].reverse().slice(0, 2).map((e) => {
 
 const home = page({
   rel: '', index: true,
-  title: 'Btown Brief Archive — every edition, searchable',
-  desc: `Search all ${stats.editions} editions of the Btown Brief — Burlington VT's feel-good newsletter. ${stats.totalWords.toLocaleString()} words of local news since Feb 2025.`,
+  title: 'Btown Brief Archive: every edition, searchable',
+  desc: `Search all ${stats.editions} editions of the Btown Brief, Burlington VT's feel-good newsletter. ${stats.totalWords.toLocaleString()} words of local news since Feb 2025.`,
   body: `
 <section class="hero">
   <h1>The Btown Brief <em>Archive</em></h1>
-  <p class="tagline">Every edition since February 2025 — ${stats.editions} newsletters, ${stats.stories.toLocaleString()} stories, ${stats.totalWords.toLocaleString()} words. All searchable.</p>
+  <p class="tagline">Every edition since February 2025: ${stats.editions} newsletters, ${stats.stories.toLocaleString()} stories, ${stats.totalWords.toLocaleString()} words. All searchable.</p>
 </section>
 
 <section class="panel search-panel">
   <h2>🔍 Search the archive</h2>
-  <p class="hint">Remember a phrase from an edition? Type it — results jump straight to the spot.</p>
+  <p class="hint">Remember a phrase from an edition? Type it and the results jump straight to the spot.</p>
   <input id="search-box" type="search" placeholder="pancake ice, Church Street toy store, creemee…" autocomplete="off">
   <div id="search-results" aria-live="polite"></div>
 </section>
 
 <section class="panel ask-panel">
   <h2>💬 Ask the archive</h2>
-  <p class="hint">Ask a question — get the closest passages the Brief has published, with sources.</p>
+  <p class="hint">Ask a question to get the closest passages the Brief has published, with sources.</p>
   <form id="ask-form"><input id="ask-box" type="text" placeholder="When did the toy store on Church Street close?" autocomplete="off">
   <button type="submit">Ask</button></form>
   <div id="ask-results" aria-live="polite"></div>
@@ -221,12 +221,12 @@ const home = page({
     <h2>🗞️ Inside the latest editions</h2>
     <a class="unlock-btn" href="premium/index.html">🔓 Unlock</a>
   </div>
-  <p class="hint">A taste of the full archive — every headline and summary from all ${stats.editions} editions lives behind the unlock.</p>
+  <p class="hint">A taste of the full archive. Every headline and summary from all ${stats.editions} editions lives behind the unlock.</p>
   <div class="teaser-cols">
 ${teaserCols}
   </div>
-  <p class="teaser-cta"><a class="chip chip-special" href="premium/index.html">🔓 Unlock the Full Archive — every headline &amp; summary since Feb 2025 →</a></p>
-  <p class="teaser-note">Just want to read one edition? They're all free — <a href="#browse">jump down to Browse every edition 👇</a></p>
+  <p class="teaser-cta"><a class="chip chip-special" href="premium/index.html">🔓 Unlock the Full Archive: every headline &amp; summary since Feb 2025 →</a></p>
+  <p class="teaser-note">Just want to read one edition? They're all free! <a href="#browse">jump down to Browse every edition 👇</a></p>
 </section>
 
 <section class="panel otd-panel" id="otd" hidden>
@@ -236,7 +236,7 @@ ${teaserCols}
 
 <section class="panel">
   <h2>🧠 Trivia time capsule</h2>
-  <p class="hint">From the early editions, when trivia lived in the newsletter itself. A fresh few every visit — <button class="reveal-btn" id="trivia-shuffle" type="button">shuffle 🔀</button></p>
+  <p class="hint">From the early editions, when trivia lived in the newsletter itself. A fresh few every visit. <button class="reveal-btn" id="trivia-shuffle" type="button">shuffle 🔀</button></p>
   <div id="trivia-deck">${triviaCards('')}</div>
 </section>
 
@@ -248,7 +248,7 @@ ${teaserCols}
     <div class="stat"><b>${stats.openings}</b><span>openings</span></div>
     <div class="stat"><b>${stats.closings}</b><span>goodbyes</span></div>
   </div>
-  <p class="teaser-cta"><a class="chip chip-special" href="stats/index.html">See all the stats — places, topics &amp; more →</a></p>
+  <p class="teaser-cta"><a class="chip chip-special" href="stats/index.html">See all the stats: places, topics &amp; more →</a></p>
 </section>
 
 <section class="panel">
@@ -266,7 +266,7 @@ for (const [t, label] of Object.entries(TOPIC_LABELS)) {
   topicIndexBody.push(`<a class="chip" href="${t}/index.html">${label} <span class="count">${list.length}</span></a>`);
   const items = list.map((s) => storyCard(s, '../../')).join('\n');
   const html = page({
-    rel: '../../', title: `${label.replace(/^\S+ /, '')} — Btown Brief Archive`,
+    rel: '../../', title: `${label.replace(/^\S+ /, '')} · Btown Brief Archive`,
     desc: `Every ${label.replace(/^\S+ /, '')} story the Btown Brief has covered.`,
     body: `<p class="crumb"><a href="../index.html">← Topics</a></p><h1>${label}</h1><p class="tagline">${list.length} stories, newest first.</p>${items}`,
   });
@@ -274,17 +274,17 @@ for (const [t, label] of Object.entries(TOPIC_LABELS)) {
   writeFileSync(join(DIST, 'topics', t, 'index.html'), html);
 }
 topicIndexBody.push(`<a class="chip chip-special" href="openings-closings/index.html">🚪 Openings &amp; Closings <span class="count">${stats.openings + stats.closings}</span></a></div>`);
-writeFileSync(join(DIST, 'topics', 'index.html'), page({ rel: '../', title: 'Topics — Btown Brief Archive', desc: 'Browse Btown Brief stories by topic.', body: topicIndexBody.join('\n') }));
+writeFileSync(join(DIST, 'topics', 'index.html'), page({ rel: '../', title: 'Topics · Btown Brief Archive', desc: 'Browse Btown Brief stories by topic.', body: topicIndexBody.join('\n') }));
 
 // openings & closings tracker
 const oc = stories.filter((s) => s.openClose).sort((a, b) => (b.date || '').localeCompare(a.date || ''));
 writeFileSync(join(DIST, 'topics', 'openings-closings', 'index.html'), (() => {
   mkdirSync(join(DIST, 'topics', 'openings-closings'), { recursive: true });
   return page({
-    rel: '../../', title: 'Openings & Closings — Btown Brief Archive',
+    rel: '../../', title: 'Openings & Closings · Btown Brief Archive',
     desc: 'Every business opening and closing the Btown Brief has covered.',
     body: `<p class="crumb"><a href="../index.html">← Topics</a></p><h1>🚪 Openings &amp; Closings</h1>
-<p class="tagline">What's arrived and what we've said goodbye to — ${stats.openings} openings, ${stats.closings} closings.</p>
+<p class="tagline">What's arrived and what we've said goodbye to: ${stats.openings} openings, ${stats.closings} closings.</p>
 ${oc.map((s) => storyCard(s, '../../', true)).join('\n')}`,
   });
 })());
@@ -309,7 +309,7 @@ const warAndPeace = (stats.totalWords / 587287).toFixed(1);
 
 mkdirSync(join(DIST, 'stats'), { recursive: true });
 writeFileSync(join(DIST, 'stats', 'index.html'), page({
-  rel: '../', title: 'Stats — Btown Brief Archive', desc: 'Btown Brief by the numbers.',
+  rel: '../', title: 'Stats · Btown Brief Archive', desc: 'Btown Brief by the numbers.',
   body: `<h1>📊 The Brief, by the numbers</h1>
 <div class="statgrid">
   <div class="stat"><b>${stats.editions}</b><span>editions</span></div>
@@ -325,7 +325,7 @@ writeFileSync(join(DIST, 'stats', 'index.html'), page({
 <section><h2>Stories by topic</h2><table>${topicRows}</table></section>
 </div>
 <section><h2>Month by month</h2><table>${monthRows}</table></section>
-<section><h2>🧠 Trivia time capsule</h2><p class="hint">From the early editions, when trivia lived in the newsletter itself. A fresh few every visit — <button class="reveal-btn" id="trivia-shuffle" type="button">shuffle 🔀</button></p>
+<section><h2>🧠 Trivia time capsule</h2><p class="hint">From the early editions, when trivia lived in the newsletter itself. A fresh few every visit. <button class="reveal-btn" id="trivia-shuffle" type="button">shuffle 🔀</button></p>
 <div id="trivia-deck">${triviaCards('../')}</div></section>`,
 }));
 
@@ -346,13 +346,13 @@ writeFileSync(join(ROOT, 'data', 'premium.json'), JSON.stringify(premiumData));
 
 mkdirSync(join(DIST, 'premium'), { recursive: true });
 writeFileSync(join(DIST, 'premium', 'index.html'), page({
-  rel: '../', title: 'The Full Archive — Btown Brief',
-  desc: 'Every headline and every story summary the Btown Brief has ever published — for supporters.',
+  rel: '../', title: 'The Full Archive · Btown Brief',
+  desc: 'Every headline and every story summary the Btown Brief has ever published, for supporters.',
   extraHead: '<script type="module" src="../premium.js"></script>',
   body: `
 <section class="hero">
   <h1>The <em>Full</em> Archive</h1>
-  <p class="tagline">Every headline. Every summary. All ${stats.editions} editions, ${stats.stories.toLocaleString()} stories — organized, browsable, and yours as a Btown Brief supporter.</p>
+  <p class="tagline">Every headline. Every summary. All ${stats.editions} editions, ${stats.stories.toLocaleString()} stories. Organized, browsable, and yours as a Btown Brief supporter.</p>
 </section>
 
 <div id="pm-locked">
@@ -361,21 +361,21 @@ writeFileSync(join(DIST, 'premium', 'index.html'), page({
       <h2>🔒 What's inside</h2>
     </div>
     <ul class="pm-perks">
-      <li>📰 <strong>${stats.stories.toLocaleString()} local stories</strong> — every headline with its full Btown Brief summary, month by month since February 2025</li>
-      <li>🔎 Filter the whole goldmine by any word — places, businesses, people</li>
+      <li>📰 <strong>${stats.stories.toLocaleString()} local stories</strong>: every headline with its full Btown Brief summary, month by month since February 2025</li>
+      <li>🔎 Filter the whole goldmine by any word: places, businesses, people</li>
       <li>💛 Support local news, events, and community highlights</li>
       <li>👕 Bonus: an exclusive Btown Brief t-shirt after your first 6 months of support, and another one every 12 months after that! <a href="https://stephenvdavis-jpg.github.io/t-shirts/index.html" target="_blank" rel="noopener">Browse the merch →</a></li>
     </ul>
     <div class="pm-ctas">
-      <a class="pm-btn pm-btn-primary" href="https://www.btownbrief.com/upgrade" target="_blank" rel="noopener">Become a supporter — $10/month →</a>
+      <a class="pm-btn pm-btn-primary" href="https://www.btownbrief.com/upgrade" target="_blank" rel="noopener">Become a supporter for $10/month →</a>
       <a class="pm-btn" href="https://ko-fi.com/btownbrief" target="_blank" rel="noopener">☕ Or support on Ko-fi</a>
     </div>
-    <p class="fine">Subscribe with the same email you use for the newsletter — that's your key.</p>
+    <p class="fine">Subscribe with the same email you use for the newsletter. That's your key.</p>
   </section>
 
   <section class="panel pm-gate">
     <h2>Already a supporter?</h2>
-    <p class="hint">Enter the email you subscribed with — we'll check it against the supporter list and let you in.</p>
+    <p class="hint">Enter the email you subscribed with and we'll check it against the supporter list.</p>
     <form id="pm-form"><input id="pm-email" type="email" placeholder="you@example.com" autocomplete="email" required>
     <button type="submit">Unlock 🔓</button></form>
     <div id="pm-msg" aria-live="polite"></div>
@@ -385,7 +385,7 @@ writeFileSync(join(DIST, 'premium', 'index.html'), page({
 <div id="pm-open" hidden>
   <section class="panel pm-toolbar">
     <div class="panel-head">
-      <h2>✅ Unlocked — welcome back!</h2>
+      <h2>✅ Unlocked. Welcome back!</h2>
       <button class="reveal-btn" id="pm-signout" type="button">sign out</button>
     </div>
     <input id="pm-filter" type="search" placeholder="Filter every story… try “creemee”, “Church Street”, “Winooski”" autocomplete="off">
