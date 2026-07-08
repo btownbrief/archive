@@ -98,7 +98,8 @@ ${body}
 </main>
 <footer data-pagefind-ignore>
   <p>A <a href="https://play.btownbrief.com" target="_blank" rel="noopener">Btown Games</a> production ·
-  <a href="https://www.btownbrief.com" target="_blank" rel="noopener">Read the Btown Brief →</a></p>
+  <a href="https://www.btownbrief.com" target="_blank" rel="noopener">Read the Btown Brief →</a> ·
+  <a href="https://stephenvdavis-jpg.github.io/t-shirts/index.html" target="_blank" rel="noopener">👕 Btown Merch</a></p>
   <p class="fine">Every edition since February 2025, archived and searchable.</p>
 </footer>
 <script type="module" src="${rel}archive.js"></script>
@@ -362,7 +363,7 @@ writeFileSync(join(DIST, 'premium', 'index.html'), page({
       <li>📰 <strong>${stats.stories.toLocaleString()} local stories</strong> — every headline with its full Btown Brief summary, month by month since February 2025</li>
       <li>🔎 Filter the whole goldmine by any word — places, businesses, people</li>
       <li>💛 Support local news, events, and community highlights</li>
-      <li>👕 Bonus: an exclusive Btown Brief t-shirt after your first 6 months of support, and another one every 12 months after that!</li>
+      <li>👕 Bonus: an exclusive Btown Brief t-shirt after your first 6 months of support, and another one every 12 months after that! <a href="https://stephenvdavis-jpg.github.io/t-shirts/index.html" target="_blank" rel="noopener">Browse the merch →</a></li>
     </ul>
     <div class="pm-ctas">
       <a class="pm-btn pm-btn-primary" href="https://www.btownbrief.com/upgrade" target="_blank" rel="noopener">Become a supporter — $10/month →</a>
