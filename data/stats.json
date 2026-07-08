@@ -1,0 +1,143 @@
+{
+  "editions": 160,
+  "totalWords": 735871,
+  "avgWords": 4599,
+  "longest": {
+    "slug": "monday-march-9th",
+    "date": "2026-03-09",
+    "title": "Monday, March 9th",
+    "words": 7703
+  },
+  "firstDate": "2025-02-03",
+  "lastDate": "2026-07-06",
+  "stories": 1548,
+  "triviaCount": 14,
+  "openings": 59,
+  "closings": 19,
+  "topSources": [
+    [
+      "sevendaysvt.com",
+      413
+    ],
+    [
+      "wcax.com",
+      348
+    ],
+    [
+      "vtdigger.org",
+      210
+    ],
+    [
+      "vermontbiz.com",
+      108
+    ],
+    [
+      "mynbc5.com",
+      89
+    ],
+    [
+      "vtcng.com",
+      73
+    ],
+    [
+      "vermontpublic.org",
+      50
+    ],
+    [
+      "uvmathletics.com",
+      41
+    ],
+    [
+      "burlingtonfreepress.com",
+      36
+    ],
+    [
+      "vtcommunitynews.org",
+      34
+    ],
+    [
+      "mychamplainvalley.com",
+      29
+    ],
+    [
+      "vtcynic.com",
+      24
+    ]
+  ],
+  "topPlaces": [
+    [
+      "South Burlington",
+      1792
+    ],
+    [
+      "UVM",
+      1526
+    ],
+    [
+      "Essex",
+      1234
+    ],
+    [
+      "Winooski",
+      1198
+    ],
+    [
+      "Church Street",
+      1069
+    ],
+    [
+      "Shelburne",
+      1055
+    ],
+    [
+      "Williston",
+      683
+    ],
+    [
+      "Flynn",
+      616
+    ],
+    [
+      "Higher Ground",
+      570
+    ],
+    [
+      "Colchester",
+      520
+    ],
+    [
+      "South End",
+      304
+    ],
+    [
+      "ECHO",
+      295
+    ],
+    [
+      "Lake Champlain",
+      277
+    ],
+    [
+      "Waterfront",
+      247
+    ],
+    [
+      "Pine Street",
+      210
+    ]
+  ],
+  "topicCounts": {
+    "housing": 343,
+    "downtown": 259,
+    "uvm-colleges": 236,
+    "lake-outdoors": 140,
+    "weather": 208,
+    "food-drink": 259,
+    "arts-music": 255,
+    "politics": 391,
+    "transportation": 170,
+    "public-safety": 260,
+    "business": 441,
+    "sports": 103
+  }
+}

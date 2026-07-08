@@ -1,0 +1,39 @@
+name: Refresh archive with new editions
+
+on:
+  schedule:
+    # Tuesday + Saturday 09:00 UTC — after Monday/Friday editions publish.
+    - cron: '0 9 * * 2,6'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write   # to trigger the Pages deploy after committing
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Crawl new editions
+        run: node scripts/build-archive.mjs
+      - name: Re-extract stories/trivia/stats
+        run: node scripts/extract.mjs
+      - name: Commit if changed
+        run: |
+          if ! git diff --quiet editions data; then
+            git config user.name "btown-brief-bot"
+            git config user.email "actions@github.com"
+            git add editions data
+            git commit -m "Archive new editions"
+            git push
+            # GITHUB_TOKEN pushes don't trigger the push-based deploy workflow.
+            gh workflow run deploy.yml --ref main
+          else
+            echo "No new editions."
+          fi
+        env:
+          GH_TOKEN: ${{ github.token }}
