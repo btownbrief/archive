@@ -5,8 +5,9 @@
 const ROOT = new URL('.', import.meta.url).href;         // site root URL
 const rel = (p) => new URL(p, ROOT).href;
 
-// Optional Claude-powered answers. Leave '' for extractive mode (no server).
-const ASK_ENDPOINT = '';
+// Claude-powered answers via Supabase edge function; set to '' to fall back
+// to extractive mode (passages only, no server).
+const ASK_ENDPOINT = 'https://jnouvwxomrcffqwilqkq.supabase.co/functions/v1/ask-archive';
 
 let pagefind = null;
 async function getPagefind() {
@@ -155,12 +156,18 @@ if (askForm) {
       }
       if (ASK_ENDPOINT) {
         const context = results.map((r) => `[${r.meta.date || ''} — ${r.meta.title}](${r.url})\n${stripHl(r.excerpt)}`).join('\n\n');
-        const resp = await fetch(ASK_ENDPOINT, {
-          method: 'POST', headers: { 'content-type': 'application/json' },
-          body: JSON.stringify({ question: q, context }),
-        });
-        const { answer } = await resp.json();
-        out.innerHTML = `<div class="ask-answer">${esc(answer).replace(/\n/g, '<br>')}</div>` + passages(results, stories, q);
+        let answer = null;
+        try {
+          const resp = await fetch(ASK_ENDPOINT, {
+            method: 'POST', headers: { 'content-type': 'application/json' },
+            body: JSON.stringify({ question: q, context }),
+          });
+          if (resp.ok) ({ answer } = await resp.json());
+        } catch { /* fall back to passages */ }
+        out.innerHTML = (answer
+          ? `<div class="ask-answer">${esc(answer).replace(/\n/g, '<br>')}</div>`
+          : `<div class="ask-answer">Couldn't reach the answer service — here are the closest passages instead:</div>`)
+          + passages(results, stories, q);
       } else {
         out.innerHTML = `<div class="ask-answer">Here's the closest thing the Brief has published — ${results.length} passage${results.length > 1 ? 's' : ''}, newest context first:</div>` + passages(results, stories, q);
       }
