@@ -9,6 +9,22 @@
 //   supabase secrets set ANTHROPIC_API_KEY=sk-ant-... --project-ref jnouvwxomrcffqwilqkq
 // Then set ASK_ENDPOINT in site/archive.js to the function URL and redeploy the site.
 
+// Per-IP rate limit: sliding window, in-memory (per isolate — approximate but
+// enough to stop casual abuse; the hard backstop is the Anthropic console
+// spend limit).
+const WINDOW_MS = 60_000;
+const MAX_PER_WINDOW = 10;
+const hits = new Map<string, number[]>();
+
+function rateLimited(ip: string): boolean {
+  const now = Date.now();
+  const recent = (hits.get(ip) || []).filter((t) => now - t < WINDOW_MS);
+  recent.push(now);
+  hits.set(ip, recent);
+  if (hits.size > 10_000) hits.clear();
+  return recent.length > MAX_PER_WINDOW;
+}
+
 const CORS = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'content-type, authorization, x-client-info, apikey',
@@ -18,6 +34,9 @@ const CORS = {
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response(null, { headers: CORS });
   if (req.method !== 'POST') return json({ error: 'POST only' }, 405);
+
+  const ip = req.headers.get('x-forwarded-for')?.split(',')[0].trim() || 'unknown';
+  if (rateLimited(ip)) return json({ error: 'rate limited — try again in a minute' }, 429);
 
   let body: { question?: string; context?: string };
   try { body = await req.json(); } catch { return json({ error: 'bad json' }, 400); }
@@ -33,7 +52,7 @@ Deno.serve(async (req) => {
       'content-type': 'application/json',
     },
     body: JSON.stringify({
-      model: 'claude-haiku-4-5-20251001',
+      model: 'claude-sonnet-5',
       max_tokens: 400,
       system:
         'You answer questions about Burlington, Vermont using ONLY the provided Btown Brief newsletter passages. ' +
