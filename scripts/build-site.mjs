@@ -196,20 +196,22 @@ const home = page({
   <p class="tagline">Every edition since February 2025: ${stats.editions} newsletters, ${stats.stories.toLocaleString()} stories, ${stats.totalWords.toLocaleString()} words. All searchable.</p>
 </section>
 
+<div class="panel-row">
 <section class="panel search-panel">
   <h2>🔍 Search the archive</h2>
-  <p class="hint">Remember a phrase from an edition? Type it and the results jump straight to the spot.</p>
-  <input id="search-box" type="search" placeholder="pancake ice, Church Street toy store, creemee…" autocomplete="off">
+  <p class="hint">Remember a phrase? Type it and jump straight to the spot.</p>
+  <input id="search-box" type="search" placeholder="pancake ice, creemee…" autocomplete="off">
   <div id="search-results" aria-live="polite"></div>
 </section>
 
 <section class="panel ask-panel">
   <h2>💬 Ask the archive</h2>
-  <p class="hint">Ask a question to get the closest passages the Brief has published, with sources.</p>
-  <form id="ask-form"><input id="ask-box" type="text" placeholder="When did the toy store on Church Street close?" autocomplete="off">
+  <p class="hint">Ask a question, get the closest passages with sources.</p>
+  <form id="ask-form"><input id="ask-box" type="text" placeholder="When did the toy store close?" autocomplete="off">
   <button type="submit">Ask</button></form>
   <div id="ask-results" aria-live="polite"></div>
 </section>
+</div>
 
 <section class="panel">
   <h2>🏷️ Browse by topic</h2>

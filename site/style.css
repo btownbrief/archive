@@ -59,6 +59,9 @@ main { max-width: 880px; margin: 0 auto; padding: 24px 16px 60px; }
   border: 1px solid var(--line); border-radius: 16px;
   padding: 20px; margin: 18px 0; box-shadow: var(--shadow);
 }
+.panel-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin: 18px 0; align-items: start; }
+.panel-row .panel { margin: 0; min-width: 0; }
+@media (max-width: 720px) { .panel-row { grid-template-columns: 1fr; } }
 .panel h2 { margin: 0 0 6px; font-size: 20px; }
 .hint { color: var(--muted); font-size: 14px; margin: 0 0 12px; }
 
