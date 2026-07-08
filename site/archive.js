@@ -165,7 +165,7 @@ if (askForm) {
           if (resp.ok) ({ answer } = await resp.json());
         } catch { /* fall back to passages */ }
         out.innerHTML = (answer
-          ? `<div class="ask-answer">${esc(answer).replace(/\n/g, '<br>')}</div>`
+          ? `<div class="ask-answer">${esc(answer).replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>')}</div>`
           : `<div class="ask-answer">Couldn't reach the answer service — here are the closest passages instead:</div>`)
           + passages(results, stories, q);
       } else {
