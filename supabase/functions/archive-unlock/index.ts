@@ -15,9 +15,11 @@
 
 const PUBLICATION_ID = 'pub_d130f553-e113-4e8f-b0a0-bbed2a253e93';
 // Tiers that unlock the archive: $10 Tier and $20 Tier ($5 stays newsletter-only).
-const ALLOWED_TIER_IDS = new Set([
-  'tier_fdc7fc36-ad20-4529-861e-243174f2432c', // $10 Tier
-  'tier_1ed50015-790d-4445-a7f0-9d979f6adddd', // $20 Tier
+// The raw v2 API reports premium tiers as names (subscription_premium_tier_names),
+// so match on both name and id.
+const ALLOWED_TIERS = new Set([
+  '$10 Tier', 'tier_fdc7fc36-ad20-4529-861e-243174f2432c',
+  '$20 Tier', 'tier_1ed50015-790d-4445-a7f0-9d979f6adddd',
 ]);
 const TOKEN_DAYS = 60;
 
@@ -89,11 +91,12 @@ async function verify(email: string) {
   if (resp.status === 404) return json({ error: 'not_subscribed' }, 403);
   if (!resp.ok) return json({ error: `beehiiv ${resp.status}` }, 502);
   const sub = (await resp.json()).data;
-  const tierIds: string[] = (sub?.tiers ?? []).map((t: { id: string }) => t.id);
   const active = sub?.status === 'active';
-  const premium = tierIds.some((id) => ALLOWED_TIER_IDS.has(id)) ||
-    // fallback if the API stops returning tier objects: any premium sub counts
-    (tierIds.length === 0 && sub?.subscription_tier === 'premium');
+  const tiers: string[] = [
+    ...(sub?.subscription_premium_tier_names ?? []),
+    ...(sub?.tiers ?? []).flatMap((t: { id?: string; name?: string }) => [t.id, t.name]),
+  ].filter(Boolean);
+  const premium = tiers.some((t) => ALLOWED_TIERS.has(t));
   if (!active || !premium) return json({ error: 'not_premium' }, 403);
   return json(await makeToken(email));
 }
