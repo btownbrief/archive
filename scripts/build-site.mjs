@@ -371,6 +371,7 @@ writeFileSync(join(DIST, 'premium', 'index.html'), page({
       <a class="pm-btn" href="https://ko-fi.com/btownbrief" target="_blank" rel="noopener">☕ Or support on Ko-fi</a>
     </div>
     <p class="fine">Subscribe with the same email you use for the newsletter. That's your key.</p>
+    <p class="fine">Smaller donator? Email me at <a href="mailto:BTownBrief@gmail.com">BTownBrief@gmail.com</a> and I may make an exception for you!</p>
   </section>
 
   <section class="panel pm-gate">
@@ -388,7 +389,12 @@ writeFileSync(join(DIST, 'premium', 'index.html'), page({
       <h2>✅ Unlocked. Welcome back!</h2>
       <button class="reveal-btn" id="pm-signout" type="button">sign out</button>
     </div>
-    <input id="pm-filter" type="search" placeholder="Filter every story… try “creemee”, “Church Street”, “Winooski”" autocomplete="off">
+    <div class="pm-tools">
+      <input id="pm-filter" type="search" placeholder="Filter every story… “creemee”, “Winooski”" autocomplete="off">
+      <form id="ask-form"><input id="ask-box" type="text" placeholder="or ask the archive a question…" autocomplete="off">
+      <button type="submit">Ask</button></form>
+    </div>
+    <div id="ask-results" aria-live="polite"></div>
   </section>
   <div id="pm-body"><p class="searching">Loading the goldmine…</p></div>
 </div>`,

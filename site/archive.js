@@ -148,7 +148,11 @@ if (askForm) {
     out.innerHTML = '<p class="searching">Digging through the archive…</p>';
     try {
       const [pf, stories] = await Promise.all([getPagefind(), getStories()]);
-      const search = await pf.search(q);
+      // Question words drown out the real terms in pagefind, so search
+      // with just the meaningful ones.
+      const STOP = new Set(['the', 'a', 'an', 'and', 'or', 'of', 'in', 'on', 'at', 'to', 'for', 'is', 'was', 'were', 'are', 'be', 'did', 'do', 'does', 'when', 'what', 'who', 'where', 'why', 'how', 'which', 'it', 'its', 'that', 'this']);
+      const keywords = q.split(/\s+/).filter((w) => !STOP.has(w.toLowerCase().replace(/[^a-z]/g, ''))).join(' ');
+      const search = await pf.search(keywords || q);
       const results = await Promise.all(search.results.slice(0, 5).map((r) => r.data()));
       if (!results.length) {
         out.innerHTML = `<div class="ask-answer">The Brief doesn't seem to have covered that. Nothing in ${document.title.match(/\d+/)?.[0] || 'the'} editions matches. Try the search box with different words?</div>`;

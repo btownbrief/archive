@@ -68,7 +68,8 @@ Deno.serve(async (req) => {
   });
   if (!resp.ok) return json({ error: `claude ${resp.status}` }, 502);
   const data = await resp.json();
-  return json({ answer: data.content?.[0]?.text ?? 'No answer.' });
+  const text = data.content?.find((b: { type: string }) => b.type === 'text')?.text;
+  return json({ answer: text ?? 'No answer.' });
 });
 
 function json(obj: unknown, status = 200) {

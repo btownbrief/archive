@@ -253,8 +253,10 @@ mark.hl-jump {
 }
 #pm-form button:disabled { opacity: .6; cursor: wait; }
 #pm-msg .ask-answer { margin-top: 12px; }
+.pm-tools { display: grid; grid-template-columns: 1.2fr 1fr; gap: 8px; margin-top: 12px; }
+@media (max-width: 640px) { .pm-tools { grid-template-columns: 1fr; } }
 #pm-filter {
-  width: 100%; margin-top: 12px; font-size: 16px; padding: 12px 15px; border-radius: 12px;
+  width: 100%; font-size: 16px; padding: 12px 15px; border-radius: 12px;
   border: 1px solid rgba(255, 210, 63, .35); background: var(--night); color: var(--ink); outline: none;
 }
 #pm-filter:focus { border-color: var(--gold); }
