@@ -226,6 +226,8 @@ mark.hl-jump {
 }
 .tease-list li::before { content: '›'; color: var(--gold); margin-right: 7px; }
 .tease-more { margin: 8px 0 0; font-size: 13px; font-weight: 700; color: var(--gold); }
+.teaser-note { margin: 10px 0 0; text-align: center; font-size: 13px; color: var(--muted); }
+#browse { scroll-margin-top: 70px; } /* land clear of the sticky nav */
 
 /* ---------- premium (Full Archive) page ---------- */
 .pm-pitch { border-color: rgba(255, 210, 63, .35); }

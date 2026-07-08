@@ -226,6 +226,7 @@ const home = page({
 ${teaserCols}
   </div>
   <p class="teaser-cta"><a class="chip chip-special" href="premium/index.html">🔓 Unlock the Full Archive — every headline &amp; summary since Feb 2025 →</a></p>
+  <p class="teaser-note">Just want to read one edition? They're all free — <a href="#browse">jump down to Browse every edition 👇</a></p>
 </section>
 
 <section class="panel otd-panel" id="otd" hidden>
@@ -251,7 +252,7 @@ ${teaserCols}
 </section>
 
 <section class="panel">
-  <h2>📚 Browse every edition</h2>
+  <h2 id="browse">📚 Browse every edition</h2>
   ${browse}
 </section>`,
   extraHead: '',
