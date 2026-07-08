@@ -208,7 +208,7 @@ const home = page({
 
 <section class="panel ask-panel">
   <h2>💬 Ask the archive</h2>
-  <p class="hint">Ask a question, get the closest passages with sources.</p>
+  <p class="hint">Ask a question and get the closest passages the Brief has published, with sources.</p>
   <form id="ask-form"><input id="ask-box" type="text" placeholder="When did the toy store close?" autocomplete="off">
   <button type="submit">Ask</button></form>
   <div id="ask-results" aria-live="polite"></div>
