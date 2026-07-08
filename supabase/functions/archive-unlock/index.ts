@@ -84,6 +84,11 @@ async function rateLimited(ip: string): Promise<boolean> {
 }
 
 async function verify(email: string) {
+  // Comp list (owner, friends & family) — lives in a secret, not this public repo:
+  //   supabase secrets set COMP_EMAILS=a@x.com,b@y.com
+  const comps = (Deno.env.get('COMP_EMAILS') || '').toLowerCase().split(',').map((e) => e.trim());
+  if (comps.includes(email)) return json(await makeToken(email));
+
   const resp = await fetch(
     `https://api.beehiiv.com/v2/publications/${PUBLICATION_ID}/subscriptions/by_email/${encodeURIComponent(email)}`,
     { headers: { authorization: `Bearer ${Deno.env.get('BEEHIIV_API_KEY')!}` } },
