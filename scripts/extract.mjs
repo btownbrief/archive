@@ -126,7 +126,7 @@ for (const file of files) {
 const domain = (u) => { try { return new URL(u).hostname.replace(/^www\./, ''); } catch { return null; } };
 const srcCount = {};
 for (const s of stories) { const d = domain(s.url); if (d) srcCount[d] = (srcCount[d] || 0) + 1; }
-const PLACES = ['Church Street', 'Winooski', 'Old North End', 'Pine Street', 'South End', 'Lake Champlain', 'North Beach', 'Leddy', 'Oakledge', 'City Hall Park', 'Waterfront', 'UVM', 'Church St', 'Intervale', 'ECHO', 'City Market', 'Battery Park', 'Shelburne', 'Essex', 'South Burlington', 'Colchester', 'Williston', 'Montpelier', 'North Ave', 'Flynn', 'Nectar’s', 'Higher Ground'];
+const PLACES = ['Burlington', 'Church Street', 'Winooski', 'Old North End', 'Pine Street', 'South End', 'Lake Champlain', 'North Beach', 'Leddy', 'Oakledge', 'City Hall Park', 'Waterfront', 'UVM', 'Church St', 'Intervale', 'ECHO', 'City Market', 'Battery Park', 'Shelburne', 'Essex', 'South Burlington', 'Colchester', 'Williston', 'Montpelier', 'North Ave', 'Flynn', 'Nectar’s', 'Higher Ground'];
 const placeCount = {};
 for (const file of files) {
   const body = readFileSync(join(ROOT, 'editions', file), 'utf8');
@@ -137,6 +137,17 @@ for (const file of files) {
 }
 placeCount['Church Street'] = (placeCount['Church Street'] || 0) + (placeCount['Church St'] || 0);
 delete placeCount['Church St'];
+// "South Burlington" mentions also match the bare "Burlington" pattern — don't double-count.
+placeCount['Burlington'] = (placeCount['Burlington'] || 0) - (placeCount['South Burlington'] || 0);
+
+// Monthly output: editions + words per calendar month.
+const monthly = {};
+for (const e of editionsMeta) {
+  const k = (e.date || '').slice(0, 7);
+  (monthly[k] ||= { editions: 0, words: 0 });
+  monthly[k].editions++;
+  monthly[k].words += e.words;
+}
 
 const longest = [...editionsMeta].sort((a, b) => b.words - a.words)[0];
 const stats = {
@@ -151,6 +162,7 @@ const stats = {
   openings: stories.filter((s) => s.openClose === 'opening').length,
   closings: stories.filter((s) => s.openClose === 'closing').length,
   topSources: Object.entries(srcCount).sort((a, b) => b[1] - a[1]).slice(0, 12),
+  monthly: Object.entries(monthly).sort((a, b) => a[0].localeCompare(b[0])),
   topPlaces: Object.entries(placeCount).sort((a, b) => b[1] - a[1]).slice(0, 15),
   topicCounts: Object.fromEntries(TOPICS.map(([t]) => [t, stories.filter((s) => s.topics.includes(t)).length])),
 };

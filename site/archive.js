@@ -219,6 +219,31 @@ if (otd) {
   })();
 }
 
+// ---------- trivia time capsule (stats page) ----------
+const deck = document.getElementById('trivia-deck');
+if (deck) {
+  const deal = () => {
+    const cards = [...deck.querySelectorAll('.trivia')];
+    for (const c of cards) {
+      c.hidden = true;
+      c.querySelector('.tanswer').hidden = true;
+      c.querySelector('.reveal-btn').hidden = false;
+    }
+    for (const c of cards.sort(() => Math.random() - 0.5).slice(0, 3)) {
+      c.hidden = false;
+      deck.prepend(c);
+    }
+  };
+  deal();
+  document.getElementById('trivia-shuffle')?.addEventListener('click', deal);
+  deck.addEventListener('click', (ev) => {
+    const btn = ev.target.closest('.reveal-btn');
+    if (!btn) return;
+    btn.hidden = true;
+    btn.closest('.trivia').querySelector('.tanswer').hidden = false;
+  });
+}
+
 // ---------- random edition ----------
 const rand = document.getElementById('btn-random');
 if (rand) {

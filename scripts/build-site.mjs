@@ -192,6 +192,17 @@ const home = page({
   <div class="chips">${topicChips}</div>
 </section>
 
+<section class="panel stats-teaser">
+  <h2>📊 The Brief, by the numbers</h2>
+  <div class="statgrid">
+    <div class="stat"><b>${stats.totalWords.toLocaleString()}</b><span>words written<br>(War and Peace ×${(stats.totalWords / 587287).toFixed(1)})</span></div>
+    <div class="stat"><b>${stats.stories.toLocaleString()}</b><span>local stories covered</span></div>
+    <div class="stat"><b>${stats.openings}</b><span>openings celebrated</span></div>
+    <div class="stat"><b>${stats.closings}</b><span>goodbyes said</span></div>
+  </div>
+  <p class="teaser-cta"><a class="chip chip-special" href="stats/index.html">See all the stats — places, topics, trivia time capsule →</a></p>
+</section>
+
 <section class="panel">
   <h2>📚 Browse every edition</h2>
   ${browse}
@@ -241,14 +252,18 @@ function storyCard(s, rel, badge = false) {
 }
 
 // ---------- stats page ----------
-const srcRows = stats.topSources.map(([d, n]) => `<tr><td>${esc(d)}</td><td>${n}</td></tr>`).join('');
+const monthRows = stats.monthly.map(([k, m]) =>
+  `<tr><td>${monthName(k)}</td><td>${m.editions} editions</td><td>${m.words.toLocaleString()}</td></tr>`).join('');
 const placeRows = stats.topPlaces.map(([p, n]) => `<tr><td>${esc(p)}</td><td>${n.toLocaleString()}</td></tr>`).join('');
 const topicRows = Object.entries(stats.topicCounts).sort((a, b) => b[1] - a[1])
   .map(([t, n]) => `<tr><td><a href="../topics/${t}/index.html">${TOPIC_LABELS[t]}</a></td><td>${n}</td></tr>`).join('');
 const warAndPeace = (stats.totalWords / 587287).toFixed(1);
-const triviaCards = trivia.map((t) => `<details class="trivia"><summary>${esc(t.question)} <span class="dt">${shortDate(t.date)}</span></summary>
+const triviaCards = trivia.map((t) => `<div class="trivia" hidden>
+<p class="tq">${esc(t.question)} <span class="dt">${shortDate(t.date)}</span></p>
 ${t.options?.length ? `<ul>${t.options.map((o, i) => `<li>${'ABCD'[i]}) ${esc(o)}</li>`).join('')}</ul>` : ''}
-<p><strong>Answer:</strong> ${esc(t.answer || 'Lost to history — check the edition!')} · <a href="../e/${t.edition}/index.html">edition</a></p></details>`).join('\n');
+<button class="reveal-btn" type="button">Reveal answer</button>
+<p class="tanswer" hidden><strong>Answer:</strong> ${esc(t.answer || 'Lost to history — check the edition!')} · <a href="../e/${t.edition}/index.html">edition</a></p>
+</div>`).join('\n');
 
 mkdirSync(join(DIST, 'stats'), { recursive: true });
 writeFileSync(join(DIST, 'stats', 'index.html'), page({
@@ -264,11 +279,12 @@ writeFileSync(join(DIST, 'stats', 'index.html'), page({
 </div>
 <p class="tagline">Longest edition ever: <a href="../e/${stats.longest.slug}/index.html">${esc(stats.longest.title)}</a> at ${stats.longest.words.toLocaleString()} words.</p>
 <div class="cols">
-<section><h2>Most-cited sources</h2><table>${srcRows}</table></section>
 <section><h2>Most-mentioned places</h2><table>${placeRows}</table></section>
-</div>
 <section><h2>Stories by topic</h2><table>${topicRows}</table></section>
-<section><h2>🧠 Trivia time capsule</h2><p class="hint">From the early editions, when trivia lived in the newsletter itself.</p>${triviaCards}</section>`,
+</div>
+<section><h2>Month by month</h2><table>${monthRows}</table></section>
+<section><h2>🧠 Trivia time capsule</h2><p class="hint">From the early editions, when trivia lived in the newsletter itself. A fresh few every visit — <button class="reveal-btn" id="trivia-shuffle" type="button">shuffle 🔀</button></p>
+<div id="trivia-deck">${triviaCards}</div></section>`,
 }));
 
 // ---------- client data + assets ----------
