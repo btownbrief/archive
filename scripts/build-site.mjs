@@ -98,6 +98,14 @@ ${extraHead}
 <main class="${index ? 'home' : 'inner'}">
 ${body}
 </main>
+${index ? `<section class="subscribe-section" data-pagefind-ignore>
+  <div class="subscribe-inner">
+    <h2>Get the Brief</h2>
+    <p>Everything happening in Burlington, in your inbox twice a week. Free.</p>
+    <p class="subscribe-proof">Join 3,000+ neighbors. 7 in 10 open every single issue.</p>
+    <iframe src="https://embeds.beehiiv.com/a1c106df-f519-4dfc-a892-61261d0f8389" title="Subscribe to the Btown Brief" width="100%" height="360" frameborder="0" scrolling="no" style="margin:0;border-radius:8px;background:transparent;"></iframe>
+  </div>
+</section>` : ''}
 <footer data-pagefind-ignore>
   <p>A <a href="https://play.btownbrief.com" target="_blank" rel="noopener">Btown Games</a> production ·
   <a href="https://www.btownbrief.com" target="_blank" rel="noopener">Read the Btown Brief →</a> ·
