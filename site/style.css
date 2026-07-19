@@ -234,6 +234,18 @@ mark.hl-jump {
 .teaser-note { margin: 10px 0 0; text-align: center; font-size: 13px; color: var(--muted); }
 #browse { scroll-margin-top: 70px; } /* land clear of the sticky nav */
 
+/* ---------- newsletter signup (home only) ---------- */
+.subscribe-section { max-width: 880px; margin: 0 auto; padding: 0 16px 36px; }
+.subscribe-inner {
+  background: linear-gradient(180deg, var(--panel), var(--night-2));
+  border: 1px solid var(--line); border-radius: 16px; padding: 20px;
+  box-shadow: var(--shadow); text-align: center;
+}
+.subscribe-inner h2 { margin: 0 0 6px; font-size: 24px; }
+.subscribe-inner p { margin: 0; color: var(--ink); }
+.subscribe-inner .subscribe-proof { margin-top: 4px; color: var(--muted); font-size: 14px; }
+.subscribe-inner iframe { display: block; max-width: 100%; margin-top: 14px !important; }
+
 /* ---------- premium (Full Archive) page ---------- */
 .pm-pitch { border-color: rgba(255, 210, 63, .35); }
 .pm-perks { list-style: none; margin: 12px 0; padding: 0; }
