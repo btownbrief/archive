@@ -57,7 +57,9 @@ Deno.serve(async (req) => {
       'content-type': 'application/json',
     },
     body: JSON.stringify({
-      model: 'z-ai/glm-5.3-flash',
+      // non-reasoning: this is a 2-4 sentence reader-facing reply; GLM's
+      // mandatory reasoning repeatedly consumed the whole budget
+      model: 'openai/gpt-4o-mini',
       // GLM reasoning is mandatory here and shares max_tokens with the answer;
       // 400 starved the reply. The 2-4 sentence length is set by the system prompt.
       max_tokens: 1500,
