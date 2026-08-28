@@ -57,11 +57,11 @@ Deno.serve(async (req) => {
       'content-type': 'application/json',
     },
     body: JSON.stringify({
-      // Non-reasoning by design. GLM's reasoning is mandatory, unbounded and
+      // Adaptive reasoning (0 thinking tokens on simple prompts). GLM's reasoning is mandatory, unbounded and
       // billed as output: it repeatedly consumed the whole budget and returned
       // no text. The reasoning cap below only matters if this is pointed back
       // at a reasoning model; 1500 leaves room either way.
-      model: 'openai/gpt-4o-mini',
+      model: 'openai/gpt-5.6-luna',
       max_tokens: 1500,
       reasoning: { max_tokens: 1024 },
       system:
