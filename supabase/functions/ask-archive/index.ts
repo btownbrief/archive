@@ -57,13 +57,12 @@ Deno.serve(async (req) => {
       'content-type': 'application/json',
     },
     body: JSON.stringify({
-      // non-reasoning: this is a 2-4 sentence reader-facing reply; GLM's
-      // mandatory reasoning repeatedly consumed the whole budget
+      // Non-reasoning by design. GLM's reasoning is mandatory, unbounded and
+      // billed as output: it repeatedly consumed the whole budget and returned
+      // no text. The reasoning cap below only matters if this is pointed back
+      // at a reasoning model; 1500 leaves room either way.
       model: 'openai/gpt-4o-mini',
-      // GLM reasoning is mandatory here and shares max_tokens with the answer;
-      // 400 starved the reply. The 2-4 sentence length is set by the system prompt.
       max_tokens: 1500,
-      // GLM reasoning cannot be disabled and shares the max_tokens budget.
       reasoning: { max_tokens: 1024 },
       system:
         'You answer questions about Burlington, Vermont using ONLY the provided Btown Brief newsletter passages. ' +
