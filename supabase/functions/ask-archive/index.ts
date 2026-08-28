@@ -6,7 +6,7 @@
 //
 // Deploy (one-time, needs `supabase login` first):
 //   supabase functions deploy ask-archive --project-ref jnouvwxomrcffqwilqkq
-//   supabase secrets set ANTHROPIC_API_KEY=sk-ant-... --project-ref jnouvwxomrcffqwilqkq
+//   supabase secrets set OPENROUTER_API_KEY=sk-or-v1-... --project-ref jnouvwxomrcffqwilqkq
 // Then set ASK_ENDPOINT in site/archive.js to the function URL and redeploy the site.
 
 // Durable rate limit via the ask_rate table (10/min per IP + 500/day global),
@@ -49,16 +49,20 @@ Deno.serve(async (req) => {
   const context = (body.context || '').slice(0, 12000).trim();
   if (!question || !context) return json({ error: 'question and context required' }, 400);
 
-  const resp = await fetch('https://api.anthropic.com/v1/messages', {
+  const resp = await fetch('https://openrouter.ai/api/v1/messages', {
     method: 'POST',
     headers: {
-      'x-api-key': Deno.env.get('ANTHROPIC_API_KEY')!,
+      'x-api-key': Deno.env.get('OPENROUTER_API_KEY')!,
       'anthropic-version': '2023-06-01',
       'content-type': 'application/json',
     },
     body: JSON.stringify({
-      model: 'claude-sonnet-5',
-      max_tokens: 400,
+      model: 'z-ai/glm-5.3-flash',
+      // GLM reasoning is mandatory here and shares max_tokens with the answer;
+      // 400 starved the reply. The 2-4 sentence length is set by the system prompt.
+      max_tokens: 1500,
+      // GLM reasoning cannot be disabled and shares the max_tokens budget.
+      reasoning: { max_tokens: 1024 },
       system:
         'You answer questions about Burlington, Vermont using ONLY the provided Btown Brief newsletter passages. ' +
         'Answer in 2-4 friendly sentences. Never use em dashes. Always name the edition date(s) you drew from. ' +
