@@ -1,7 +1,7 @@
 {
-  "editions": 177,
-  "totalWords": 851091,
-  "avgWords": 4808,
+  "editions": 178,
+  "totalWords": 857582,
+  "avgWords": 4818,
   "longest": {
     "slug": "friday-august-21st",
     "date": "2026-08-21",
@@ -9,23 +9,23 @@
     "words": 8387
   },
   "firstDate": "2025-02-03",
-  "lastDate": "2026-08-31",
-  "stories": 1791,
+  "lastDate": "2026-09-04",
+  "stories": 1801,
   "triviaCount": 14,
   "openings": 69,
   "closings": 24,
   "topSources": [
     [
       "sevendaysvt.com",
-      478
+      481
     ],
     [
       "wcax.com",
-      387
+      390
     ],
     [
       "vtdigger.org",
-      247
+      251
     ],
     [
       "vermontbiz.com",
@@ -197,82 +197,89 @@
         "editions": 10,
         "words": 65963
       }
+    ],
+    [
+      "2026-09",
+      {
+        "editions": 1,
+        "words": 6491
+      }
     ]
   ],
   "topPlaces": [
     [
       "Burlington",
-      15661
+      15839
     ],
     [
       "South Burlington",
-      2161
+      2187
     ],
     [
       "UVM",
-      1664
+      1681
     ],
     [
       "Shelburne",
-      1559
+      1586
     ],
     [
       "Essex",
-      1505
+      1530
     ],
     [
       "Winooski",
-      1474
+      1488
     ],
     [
       "Church Street",
-      1250
+      1251
     ],
     [
       "Williston",
-      865
+      870
     ],
     [
       "Flynn",
-      685
+      686
     ],
     [
       "Colchester",
-      669
+      678
     ],
     [
       "Higher Ground",
-      639
+      645
     ],
     [
       "ECHO",
-      469
+      486
     ],
     [
       "Lake Champlain",
-      415
+      423
     ],
     [
       "South End",
-      336
+      340
     ],
     [
       "Waterfront",
-      328
+      333
     ]
   ],
   "topicCounts": {
-    "housing": 397,
+    "housing": 399,
     "downtown": 307,
-    "uvm-colleges": 262,
-    "lake-outdoors": 170,
-    "weather": 227,
+    "uvm-colleges": 264,
+    "lake-outdoors": 172,
+    "weather": 230,
     "food-drink": 299,
-    "arts-music": 303,
-    "politics": 449,
+    "arts-music": 305,
+    "politics": 451,
     "transportation": 204,
-    "public-safety": 310,
-    "business": 503,
+    "public-safety": 311,
+    "business": 506,
     "sports": 112
   }
 }
