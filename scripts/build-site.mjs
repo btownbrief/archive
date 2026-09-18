@@ -99,6 +99,7 @@ fbq('track', 'PageView');
 src="https://www.facebook.com/tr?id=2471867016612559&ev=PageView&noscript=1"
 /></noscript>
 <!-- End Meta Pixel Code -->
+<script data-goatcounter="https://btown-brief.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </head>
 <body>
 <header class="nav" data-pagefind-ignore>
@@ -130,6 +131,7 @@ ${index ? `<section class="subscribe-section" data-pagefind-ignore>
   <p class="fine">Every edition since February 2025, archived and searchable.</p>
 </footer>
 <script type="module" src="${rel}archive.js?v=${V}"></script>
+<script src="https://play.btownbrief.com/ticker.js" defer></script>
 </body>
 </html>`;
 }
