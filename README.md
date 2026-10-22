@@ -40,3 +40,5 @@ The ask box ships in extractive mode (no server needed): it shows the closest
 passages with citations. To upgrade it to real written answers, deploy the edge
 function in `supabase/functions/ask-archive/` (instructions in the file), then set
 `ASK_ENDPOINT` in `site/archive.js` to the function URL and push.
+
+All rights reserved: this code is published for viewing only and is not open source (see [LICENSE](LICENSE)).
