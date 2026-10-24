@@ -1,31 +1,31 @@
 {
-  "editions": 193,
-  "totalWords": 971426,
-  "avgWords": 5033,
+  "editions": 194,
+  "totalWords": 980361,
+  "avgWords": 5053,
   "longest": {
-    "slug": "friday-october-16th",
-    "date": "2026-10-16",
-    "title": "Friday, October 16th",
-    "words": 8526
+    "slug": "friday-october-23rd",
+    "date": "2026-10-23",
+    "title": "Friday, October 23rd",
+    "words": 8935
   },
   "firstDate": "2025-02-03",
-  "lastDate": "2026-10-19",
-  "stories": 1955,
+  "lastDate": "2026-10-23",
+  "stories": 1968,
   "triviaCount": 14,
-  "openings": 76,
+  "openings": 77,
   "closings": 26,
   "topSources": [
     [
       "sevendaysvt.com",
-      526
+      530
     ],
     [
       "wcax.com",
-      421
+      423
     ],
     [
       "vtdigger.org",
-      286
+      289
     ],
     [
       "vermontbiz.com",
@@ -33,7 +33,7 @@
     ],
     [
       "mynbc5.com",
-      129
+      130
     ],
     [
       "vtcng.com",
@@ -41,7 +41,7 @@
     ],
     [
       "vermontpublic.org",
-      75
+      77
     ],
     [
       "vtcommunitynews.org",
@@ -53,7 +53,7 @@
     ],
     [
       "mychamplainvalley.com",
-      38
+      39
     ],
     [
       "burlingtonfreepress.com",
@@ -208,63 +208,63 @@
     [
       "2026-10",
       {
-        "editions": 7,
-        "words": 53671
+        "editions": 8,
+        "words": 62606
       }
     ]
   ],
   "topPlaces": [
     [
       "Burlington",
-      18966
+      19152
     ],
     [
       "South Burlington",
-      2515
+      2542
     ],
     [
       "Shelburne",
-      2067
+      2106
     ],
     [
       "UVM",
-      2023
+      2057
     ],
     [
       "Winooski",
-      1780
+      1824
     ],
     [
       "Essex",
-      1757
+      1785
     ],
     [
       "Church Street",
-      1396
+      1397
     ],
     [
       "Williston",
-      1025
+      1042
     ],
     [
       "Flynn",
-      828
+      838
     ],
     [
       "Colchester",
-      785
+      805
     ],
     [
       "Higher Ground",
-      772
+      782
     ],
     [
       "ECHO",
-      566
+      571
     ],
     [
       "Lake Champlain",
-      495
+      496
     ],
     [
       "South End",
@@ -272,21 +272,21 @@
     ],
     [
       "Waterfront",
-      361
+      365
     ]
   ],
   "topicCounts": {
-    "housing": 435,
+    "housing": 438,
     "downtown": 325,
     "uvm-colleges": 283,
     "lake-outdoors": 180,
-    "weather": 245,
-    "food-drink": 328,
-    "arts-music": 334,
-    "politics": 491,
-    "transportation": 222,
-    "public-safety": 352,
-    "business": 551,
+    "weather": 247,
+    "food-drink": 329,
+    "arts-music": 335,
+    "politics": 495,
+    "transportation": 223,
+    "public-safety": 355,
+    "business": 554,
     "sports": 116
   }
 }
