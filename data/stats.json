@@ -1,7 +1,7 @@
 {
-  "editions": 197,
-  "totalWords": 1005150,
-  "avgWords": 5102,
+  "editions": 198,
+  "totalWords": 1014061,
+  "avgWords": 5122,
   "longest": {
     "slug": "friday-october-23rd",
     "date": "2026-10-23",
@@ -9,27 +9,27 @@
     "words": 8935
   },
   "firstDate": "2025-02-03",
-  "lastDate": "2026-11-06",
-  "stories": 1999,
+  "lastDate": "2026-11-09",
+  "stories": 2010,
   "triviaCount": 14,
-  "openings": 77,
+  "openings": 78,
   "closings": 26,
   "topSources": [
     [
       "sevendaysvt.com",
-      540
+      544
     ],
     [
       "wcax.com",
-      428
+      430
     ],
     [
       "vtdigger.org",
-      295
+      297
     ],
     [
       "mynbc5.com",
-      132
+      133
     ],
     [
       "vermontbiz.com",
@@ -37,7 +37,7 @@
     ],
     [
       "vtcng.com",
-      88
+      90
     ],
     [
       "vermontpublic.org",
@@ -215,55 +215,55 @@
     [
       "2026-11",
       {
-        "editions": 1,
-        "words": 8404
+        "editions": 2,
+        "words": 17315
       }
     ]
   ],
   "topPlaces": [
     [
       "Burlington",
-      19712
+      19944
     ],
     [
       "South Burlington",
-      2625
+      2651
     ],
     [
       "UVM",
-      2178
+      2228
     ],
     [
       "Shelburne",
-      2162
+      2177
     ],
     [
       "Winooski",
-      1902
+      1913
     ],
     [
       "Essex",
-      1879
+      1903
     ],
     [
       "Church Street",
-      1420
+      1426
     ],
     [
       "Williston",
-      1087
+      1103
     ],
     [
       "Flynn",
-      872
+      880
     ],
     [
       "Colchester",
-      840
+      855
     ],
     [
       "Higher Ground",
-      814
+      822
     ],
     [
       "ECHO",
@@ -271,29 +271,29 @@
     ],
     [
       "Lake Champlain",
-      506
+      510
     ],
     [
       "South End",
-      385
+      386
     ],
     [
       "Waterfront",
-      369
+      371
     ]
   ],
   "topicCounts": {
-    "housing": 441,
-    "downtown": 329,
-    "uvm-colleges": 286,
-    "lake-outdoors": 185,
-    "weather": 249,
-    "food-drink": 333,
-    "arts-music": 339,
-    "politics": 505,
-    "transportation": 224,
-    "public-safety": 358,
-    "business": 561,
+    "housing": 445,
+    "downtown": 332,
+    "uvm-colleges": 288,
+    "lake-outdoors": 187,
+    "weather": 250,
+    "food-drink": 335,
+    "arts-music": 341,
+    "politics": 507,
+    "transportation": 226,
+    "public-safety": 361,
+    "business": 566,
     "sports": 119
   }
 }
