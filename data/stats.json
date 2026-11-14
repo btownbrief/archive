@@ -1,7 +1,7 @@
 {
-  "editions": 198,
-  "totalWords": 1014061,
-  "avgWords": 5122,
+  "editions": 199,
+  "totalWords": 1022717,
+  "avgWords": 5139,
   "longest": {
     "slug": "friday-october-23rd",
     "date": "2026-10-23",
@@ -9,27 +9,27 @@
     "words": 8935
   },
   "firstDate": "2025-02-03",
-  "lastDate": "2026-11-09",
-  "stories": 2010,
+  "lastDate": "2026-11-13",
+  "stories": 2018,
   "triviaCount": 14,
   "openings": 78,
-  "closings": 26,
+  "closings": 27,
   "topSources": [
     [
       "sevendaysvt.com",
-      544
+      547
     ],
     [
       "wcax.com",
-      430
+      431
     ],
     [
       "vtdigger.org",
-      297
+      299
     ],
     [
       "mynbc5.com",
-      133
+      135
     ],
     [
       "vermontbiz.com",
@@ -215,55 +215,55 @@
     [
       "2026-11",
       {
-        "editions": 2,
-        "words": 17315
+        "editions": 3,
+        "words": 25971
       }
     ]
   ],
   "topPlaces": [
     [
       "Burlington",
-      19944
+      20173
     ],
     [
       "South Burlington",
-      2651
+      2679
     ],
     [
       "UVM",
-      2228
+      2286
     ],
     [
       "Shelburne",
-      2177
+      2201
     ],
     [
       "Winooski",
-      1913
+      1935
     ],
     [
       "Essex",
-      1903
+      1925
     ],
     [
       "Church Street",
-      1426
+      1432
     ],
     [
       "Williston",
-      1103
+      1115
     ],
     [
       "Flynn",
-      880
+      902
     ],
     [
       "Colchester",
-      855
+      865
     ],
     [
       "Higher Ground",
-      822
+      834
     ],
     [
       "ECHO",
@@ -271,7 +271,7 @@
     ],
     [
       "Lake Champlain",
-      510
+      515
     ],
     [
       "South End",
@@ -279,21 +279,21 @@
     ],
     [
       "Waterfront",
-      371
+      372
     ]
   ],
   "topicCounts": {
-    "housing": 445,
-    "downtown": 332,
+    "housing": 449,
+    "downtown": 335,
     "uvm-colleges": 288,
-    "lake-outdoors": 187,
+    "lake-outdoors": 188,
     "weather": 250,
-    "food-drink": 335,
-    "arts-music": 341,
-    "politics": 507,
+    "food-drink": 337,
+    "arts-music": 343,
+    "politics": 508,
     "transportation": 226,
-    "public-safety": 361,
-    "business": 566,
+    "public-safety": 363,
+    "business": 569,
     "sports": 119
   }
 }
